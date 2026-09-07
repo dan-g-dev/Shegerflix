@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
+import { assetUrl } from "../api/assetUrl";
 
 const FALLBACK_BACKDROP = 'https://placehold.co/1280x720/15151c/9a9aa5?text=ShegerFlix';
 const AUTOPLAY_MS = 7000;
@@ -28,15 +29,20 @@ export default function Hero({ titles = [] }) {
     <section className="relative h-[46vh] min-h-[280px] sm:h-[56vh] sm:min-h-[360px] md:h-[68vh] md:min-h-[420px] w-full overflow-hidden group/hero">
       <img
         key={title.id}
-        src={title.backdrop_url || FALLBACK_BACKDROP}
-        onError={(e) => { e.currentTarget.src = FALLBACK_BACKDROP; }}
+        src={assetUrl(title.backdrop_url) || FALLBACK_BACKDROP}
+        onError={(e) => {
+          e.currentTarget.src = FALLBACK_BACKDROP;
+        }}
         alt={title.title}
         className="absolute inset-0 h-full w-full object-cover hero-fade-in"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-sheger-bg via-sheger-bg/40 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-r from-sheger-bg/80 sm:from-sheger-bg/70 via-transparent to-transparent" />
 
-      <div key={`content-${title.id}`} className="relative z-10 flex h-full max-w-7xl mx-auto flex-col justify-end px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 hero-fade-in">
+      <div
+        key={`content-${title.id}`}
+        className="relative z-10 flex h-full max-w-7xl mx-auto flex-col justify-end px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 hero-fade-in"
+      >
         <h1 className="max-w-xl text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-md">
           {title.title}
         </h1>
@@ -82,7 +88,7 @@ export default function Hero({ titles = [] }) {
                 key={t.id}
                 onClick={() => setIndex(i)}
                 aria-label={`Go to slide ${i + 1}`}
-                className={`hero-dot h-1.5 rounded-full ${i === index ? 'w-6 bg-sheger-yellow' : 'w-1.5 bg-white/40 hover:bg-white/60'}`}
+                className={`hero-dot h-1.5 rounded-full ${i === index ? "w-6 bg-sheger-yellow" : "w-1.5 bg-white/40 hover:bg-white/60"}`}
               />
             ))}
           </div>
